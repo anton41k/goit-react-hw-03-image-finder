@@ -16,6 +16,7 @@ class GalleryView extends Component {
   state = {
     gallery: [],
     currentPage: 1,
+    pageSize: 12,
     searchQuery: "",
     isLoading: false,
     error: null,
@@ -48,8 +49,8 @@ class GalleryView extends Component {
   };
 
   fetchGallery = () => {
-    const { currentPage, searchQuery } = this.state;
-    const options = { searchQuery, currentPage };
+    const { currentPage, searchQuery, pageSize } = this.state;
+    const options = { searchQuery, currentPage, pageSize };
 
     this.setState({ isLoading: true });
 
@@ -97,8 +98,9 @@ class GalleryView extends Component {
   };
 
   render() {
-    const { gallery, isLoading, showModal, imgModal } = this.state;
-    const shouldRenderLoadMoreButton = gallery.length > 11 && !isLoading;
+    const { gallery, isLoading, showModal, imgModal, pageSize } = this.state;
+    const shouldRenderLoadMoreButton =
+      gallery.length > pageSize - 1 && !isLoading;
     return (
       <div className={css.container}>
         <Searchbar onSubmit={this.onChangeQuery} />
