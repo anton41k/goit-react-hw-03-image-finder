@@ -1,50 +1,41 @@
-import { Component } from "react";
-import { ImSearch } from "react-icons/im";
-import { toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import React, { Component } from "react";
+
+import Button from "../Button/Button";
 
 import css from "./Searchbar.module.css";
 
-export default class Searchbar extends Component {
-  state = {
-    search: "",
+class SearchForm extends Component {
+  state = { query: "" };
+
+  handleChange = (e) => {
+    this.setState({ query: e.currentTarget.value.toLowerCase() });
   };
 
-  handleSearchChange = (ev) => {
-    this.setState({
-      search: ev.currentTarget.value.toLowerCase(),
-    });
-  };
+  handleSubmit = (e) => {
+    e.preventDefault();
 
-  handleSubmit = (ev) => {
-    ev.preventDefault();
-
-    const { search } = this.state;
-    if (search.trim() === "") {
-      this.setState({ search: "" });
-      return toast.error("Search must not be empty!");
-    }
-    this.props.onSubmit(this.state.search);
-    this.setState({ search: "" });
+    this.props.onSubmit(this.state.query);
+    this.setState({ query: "" });
   };
 
   render() {
-    const { search } = this.state;
     return (
-      <form className={css.form} onSubmit={this.handleSubmit}>
-        <input
-          className={css.form_input}
-          type="text"
-          name="search"
-          required
-          onChange={this.handleSearchChange}
-          value={search}
-        />
-
-        <button className={css.form_submit} type="submit">
-          <ImSearch />
-        </button>
-      </form>
+      <header className={css.searchbar}>
+        <form className={css.search_form} onSubmit={this.handleSubmit}>
+          <Button type="submit" className="search_btn" />
+          <input
+            className={css.search_form_input}
+            type="text"
+            autoComplete="off"
+            autoFocus
+            placeholder="Search images and photos"
+            value={this.state.query}
+            onChange={this.handleChange}
+          />
+        </form>
+      </header>
     );
   }
 }
+
+export default SearchForm;

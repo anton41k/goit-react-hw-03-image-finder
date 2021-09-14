@@ -1,20 +1,23 @@
-import { Component } from "react";
+import React, { Component } from "react";
+import { ImSearch } from "react-icons/im";
+import { IconContext } from "react-icons";
 
-export default class LoaderGalery extends Component {
-  state = {
-    page: 1,
-  };
+import css from "./Button.module.css";
 
-  hendelNextPage = () => {
-    console.log(this.props.page);
-    const nextPage = this.props.page + 1;
-    this.props.onClick(nextPage);
-  };
-
+export default class Button extends Component {
   render() {
+    const { type, text, className } = this.props;
+    let onClick = this.props.onClick ? this.props.onClick : null;
+
     return (
-      <button type="button" onClick={this.hendelNextPage}>
-        Load more
+      <button type={type} className={css[className]} onClick={onClick}>
+        {text ? (
+          text
+        ) : (
+          <IconContext.Provider value={{ size: "1.4em", color: "gray" }}>
+            <ImSearch />
+          </IconContext.Provider>
+        )}
       </button>
     );
   }

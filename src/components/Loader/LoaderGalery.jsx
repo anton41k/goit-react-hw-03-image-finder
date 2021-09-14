@@ -1,28 +1,15 @@
-import { Component } from "react";
+import React from "react";
 import Loader from "react-loader-spinner";
 import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
 
-export default class LoaderGalery extends Component {
-  state = {
-    loading: false,
-  };
+import css from "./LoaderGalery.module.css";
 
-  hendleIsLoading = (loading) => {
-    this.setState({ loading });
-  };
+const LoaderGalery = () => {
+  return (
+    <div className={css.container_loader}>
+      <Loader type="Watch" color="#00BFFF" height={100} width={100} />
+    </div>
+  );
+};
 
-  render() {
-    const { loading } = this.state;
-    return (
-      <div>
-        <Loader
-          type="Watch"
-          color="#00BFFF"
-          height={100}
-          width={100}
-          visible={loading}
-        />
-      </div>
-    );
-  }
-}
+export default LoaderGalery;

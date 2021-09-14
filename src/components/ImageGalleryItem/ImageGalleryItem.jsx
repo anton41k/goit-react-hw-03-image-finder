@@ -1,16 +1,27 @@
 import { Component } from "react";
 
-//import css from "./ImageGalleryItem.module.css";
+import css from "./ImageGalleryItem.module.css";
 
 export default class ImageGallery extends Component {
   render() {
-    const { largeImageURL, webformatURL, tags } = this.props.elem;
+    const gallery = this.props.gallery;
+    const onClick = this.props.onClick ? this.props.onClick : null;
     return (
-      <li>
-        <a href={largeImageURL}>
-          <img src={webformatURL} alt={tags} />
-        </a>
-      </li>
+      <>
+        {gallery.map((el) => (
+          <li
+            key={`${el.id}${el.webformatURL}`}
+            onClick={() => this.props.onClick(el)}
+            className={css.photo_card}
+          >
+            <img
+              src={el.webformatURL}
+              alt={el.tags}
+              className={css.photo_img}
+            />
+          </li>
+        ))}
+      </>
     );
   }
 }
